@@ -1,0 +1,6 @@
+{
+  "name": "CaffeineIQ - Real-Time Caffeine Metabolism & PWA Tracker",
+  "description": "Precision caffeine metabolism monitor and pharmacokinetic tracker with real-time exponential decay, interactive can visualization, danger zone timeline, and full offline support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

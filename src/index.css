@@ -1,0 +1,157 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-display: 'Outfit', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-mono, tabular-nums {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.6);
+}
+
+/* Fluid wave animation keyframes */
+@keyframes waveFlow {
+  0% {
+    transform: translateX(0) translateZ(0) scaleY(1);
+  }
+  50% {
+    transform: translateX(-25%) translateZ(0) scaleY(1.08);
+  }
+  100% {
+    transform: translateX(-50%) translateZ(0) scaleY(1);
+  }
+}
+
+@keyframes bubbleRise {
+  0% {
+    transform: translateY(0) scale(0.6);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.9;
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-160px) scale(1.1);
+    opacity: 0;
+  }
+}
+
+/* Cardiac Lub-Dub Heartbeat Keyframes */
+@keyframes cardiacPulse {
+  0% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.18);
+  }
+  28% {
+    transform: scale(1.02);
+  }
+  42% {
+    transform: scale(1.12);
+  }
+  70% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ECG Wave sweep line */
+@keyframes ecgSweep {
+  0% {
+    stroke-dashoffset: 400;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-wave {
+  animation: waveFlow 6s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+}
+
+.animate-wave-slow {
+  animation: waveFlow 9s cubic-bezier(0.36, 0.45, 0.63, 0.53) -2s infinite;
+}
+
+.animate-cardiac {
+  animation: cardiacPulse var(--heart-duration, 0.88s) cubic-bezier(0.21, 0.61, 0.35, 1) infinite;
+}
+
+@keyframes fizzDrift {
+  0% {
+    transform: translateY(0) translateX(0) scale(0.6);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.95;
+    transform: translateY(-24px) translateX(2px) scale(0.85);
+  }
+  55% {
+    opacity: 0.9;
+    transform: translateY(-80px) translateX(-2px) scale(1);
+  }
+  85% {
+    opacity: 0.75;
+    transform: translateY(-145px) translateX(1.5px) scale(1.1);
+  }
+  100% {
+    transform: translateY(-210px) translateX(-1px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes sparkleGlint {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(0.7) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(45deg);
+  }
+}
+
+.animate-fizz {
+  animation: fizzDrift 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-sparkle {
+  animation: sparkleGlint 2.4s ease-in-out infinite;
+}
+
