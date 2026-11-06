@@ -38,12 +38,13 @@ export default defineConfig(() => {
           scope: base,
 
           icons: [
-  {
-    src: `${base}logo.png`,
-    type: 'image/png',
-    purpose: 'any',
-  },
-],
+            {
+              src: `${base}logo.png`,
+              type: 'image/png',
+              purpose: 'any',
+            },
+          ],
+        },
 
         workbox: {
           globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
