@@ -301,14 +301,13 @@ export const AnimatedCan: React.FC<AnimatedCanProps> = ({
                 />
 
                 {/* The authentic logo.png circular metallic lid disc */}
-                <image
-                  href="/logo.png"
-                  x="-25"
-                  y="-25"
-                  width="50"
-                  height="50"
-                  className="drop-shadow-md"
-                />
+              <image
+  href={`${import.meta.env.BASE_URL}logo.png`}
+  x="-25"
+  y="-25"
+  width="50"
+  height="50"
+/>
 
                 {/* Subtle core aperture glow matching active fluid state */}
                 {fillPercentage > 0 && (
