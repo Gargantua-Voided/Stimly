@@ -17,7 +17,7 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Left: Brand Identity with logo.png */}
         <div className="flex items-center gap-2.5">
           <img
-            src="/logo.png"
+          src={`${import.meta.env.BASE_URL}logo.png`}
             alt="Stimly"
             className="w-8 h-8 rounded-full object-cover shadow-sm ring-1 ring-slate-200 dark:ring-slate-700"
           />
