@@ -121,7 +121,7 @@ export const SteadyStatePacer: React.FC<SteadyStatePacerProps> = ({
               try {
                 new Notification('Stimly Microdose Sip', {
                   body: `Time for a ~${sipVolumeMl}ml sip (${sipCaffeineMg}mg) to sustain your ${targetMg}mg steady state!`,
-                  icon: '/logo.png',
+                  icon: `${import.meta.env.BASE_URL}logo.png`,
                 });
               } catch {
                 // Ignore
