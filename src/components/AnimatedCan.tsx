@@ -31,14 +31,16 @@ export const AnimatedCan: React.FC<AnimatedCanProps> = ({
     return Math.min(94, Math.max(6, pct));
   }, [summary.currentCaffeineMg, maxCapacity]);
 
-  // Dynamic theme colors - Classic golden-yellow energy drink profile!
+  // Dynamic theme colors - Crisp, very light yellow energy drink profile!
   const themeColors = useMemo(() => {
     const mg = summary.currentCaffeineMg;
 
     if (mg > profile.dailyLimitMg || mg > 350) {
       return {
-        liquidGradStart: '#f59e0b',
-        liquidGradEnd: '#b91c1c',
+        liquidGradStart: '#fde047',
+        liquidGradMid: '#f97316',
+        liquidGradEnd: '#dc2626',
+        liquidGradSurface: '#fef08a',
         glowColor: 'rgba(239, 68, 68, 0.45)',
         badgeBg: 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/30 dark:border-rose-800 dark:text-rose-300',
         stateLabel: 'Limit Exceeded',
@@ -46,29 +48,35 @@ export const AnimatedCan: React.FC<AnimatedCanProps> = ({
       };
     } else if (mg > 200) {
       return {
-        liquidGradStart: '#fbbf24',
-        liquidGradEnd: '#d97706',
-        glowColor: 'rgba(245, 158, 11, 0.45)',
-        badgeBg: 'bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-950/30 dark:border-amber-800 dark:text-amber-300',
+        liquidGradStart: '#fef08a',
+        liquidGradMid: '#fde047',
+        liquidGradEnd: '#ca8a04',
+        liquidGradSurface: '#fef9c3',
+        glowColor: 'rgba(234, 179, 8, 0.45)',
+        badgeBg: 'bg-yellow-50 text-yellow-800 border-yellow-200 dark:bg-yellow-950/30 dark:border-yellow-800 dark:text-yellow-300',
         stateLabel: 'Elevated Energy',
         icon: Flame,
       };
     } else if (mg >= 40) {
-      // Classic vibrant golden-citrus taurine energy drink yellow!
+      // Classic crisp very light yellow energy drink palette
       return {
-        liquidGradStart: '#facc15',
-        liquidGradEnd: '#ca8a04',
-        glowColor: 'rgba(234, 179, 8, 0.45)',
-        badgeBg: 'bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-950/30 dark:border-amber-800 dark:text-amber-300',
+        liquidGradStart: '#fef08a',
+        liquidGradMid: '#fde047',
+        liquidGradEnd: '#eab308',
+        liquidGradSurface: '#fefce8',
+        glowColor: 'rgba(250, 204, 21, 0.45)',
+        badgeBg: 'bg-yellow-50 text-yellow-800 border-yellow-200 dark:bg-yellow-950/30 dark:border-yellow-800 dark:text-yellow-300',
         stateLabel: 'Optimal Energy',
         icon: Zap,
       };
     } else if (mg > 0.05) {
-      // Light crisp golden yellow for residual caffeine
+      // Very light pale pastel yellow for residual caffeine
       return {
-        liquidGradStart: '#fef08a',
-        liquidGradEnd: '#eab308',
-        glowColor: 'rgba(250, 204, 21, 0.35)',
+        liquidGradStart: '#fef9c3',
+        liquidGradMid: '#fef08a',
+        liquidGradEnd: '#facc15',
+        liquidGradSurface: '#ffffff',
+        glowColor: 'rgba(253, 224, 71, 0.35)',
         badgeBg: 'bg-yellow-50 text-yellow-800 border-yellow-200 dark:bg-yellow-950/30 dark:border-yellow-800 dark:text-yellow-300',
         stateLabel: 'Residual',
         icon: HeartPulse,
@@ -76,7 +84,9 @@ export const AnimatedCan: React.FC<AnimatedCanProps> = ({
     } else {
       return {
         liquidGradStart: '#94a3b8',
-        liquidGradEnd: '#64748b',
+        liquidGradMid: '#64748b',
+        liquidGradEnd: '#475569',
+        liquidGradSurface: '#cbd5e1',
         glowColor: 'rgba(148, 163, 184, 0.12)',
         badgeBg: 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300',
         stateLabel: 'System Clear',
@@ -88,15 +98,15 @@ export const AnimatedCan: React.FC<AnimatedCanProps> = ({
   // Bubbles ONLY generated when there is active liquid
   const bubbleList = useMemo(() => {
     if (fillPercentage === 0) return [];
-    const count = fizzBurst || isRecentLogged ? 30 : 16;
+    const count = fizzBurst || isRecentLogged ? 46 : 26;
     const list = [];
     for (let i = 0; i < count; i++) {
       list.push({
         id: i,
-        cx: 50 + ((i * 19) % 100),
-        r: 1.4 + (i % 3) * 0.8,
-        speed: 1.1 + (i % 4) * 0.35,
-        delay: (i % 5) * 0.22,
+        cx: 46 + ((i * 17) % 108),
+        r: 0.9 + (i % 4) * 0.55,
+        speed: 1.0 + (i % 5) * 0.28,
+        delay: (i % 7) * 0.18,
       });
     }
     return list;
@@ -205,18 +215,32 @@ export const AnimatedCan: React.FC<AnimatedCanProps> = ({
                 <stop offset="100%" stopColor="#ffffff" stopOpacity="0.0" />
               </radialGradient>
 
-              {/* Classic Golden Energy Drink Liquid Gradient */}
+              {/* Crisp Very Light Yellow Energy Drink Liquid Gradient */}
               <linearGradient id="goldenEnergyLiquidGrad" x1="0%" y1="100%" x2="0%" y2="0%">
                 <stop offset="0%" stopColor={themeColors.liquidGradEnd} stopOpacity="0.92" />
-                <stop offset="75%" stopColor={themeColors.liquidGradStart} stopOpacity="0.94" />
-                <stop offset="100%" stopColor="#fef9c3" stopOpacity="0.96" />
+                <stop offset="30%" stopColor={themeColors.liquidGradEnd} stopOpacity="0.9" />
+                <stop offset="62%" stopColor={themeColors.liquidGradMid} stopOpacity="0.92" />
+                <stop offset="85%" stopColor={themeColors.liquidGradStart} stopOpacity="0.94" />
+                <stop offset="100%" stopColor={themeColors.liquidGradSurface} stopOpacity="0.98" />
               </linearGradient>
 
-              {/* Effervescent Foam Crest Gradient */}
+              {/* Cylindrical Translucent Light Yellow Fluid Sheen & Specular Center Glow */}
+              <linearGradient id="energyLiquidDepthGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#ca8a04" stopOpacity="0.18" />
+                <stop offset="16%" stopColor="#eab308" stopOpacity="0.05" />
+                <stop offset="46%" stopColor="#ffffff" stopOpacity="0.4" />
+                <stop offset="62%" stopColor="#fefce8" stopOpacity="0.25" />
+                <stop offset="86%" stopColor="#eab308" stopOpacity="0.05" />
+                <stop offset="100%" stopColor="#ca8a04" stopOpacity="0.2" />
+              </linearGradient>
+
+              {/* Effervescent Champagne-Citrus Light Foam Crest Gradient */}
               <linearGradient id="energyWaveFrothGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#fef08a" stopOpacity="0.75" />
-                <stop offset="50%" stopColor="#ffffff" stopOpacity="0.98" />
-                <stop offset="100%" stopColor="#fef08a" stopOpacity="0.75" />
+                <stop offset="0%" stopColor="#fef08a" stopOpacity="0.85" />
+                <stop offset="30%" stopColor="#fefce8" stopOpacity="0.95" />
+                <stop offset="50%" stopColor="#ffffff" stopOpacity="1" />
+                <stop offset="70%" stopColor="#fefce8" stopOpacity="0.95" />
+                <stop offset="100%" stopColor="#fef08a" stopOpacity="0.85" />
               </linearGradient>
 
               {/* Authentic Slim Beverage Can Silhouette (Shoulder taper + chime base) */}
@@ -256,17 +280,25 @@ export const AnimatedCan: React.FC<AnimatedCanProps> = ({
               <line x1="126" y1="24" x2="126" y2="355" stroke="#475569" strokeWidth="0.5" opacity="0.18" />
               <line x1="144" y1="24" x2="144" y2="355" stroke="#334155" strokeWidth="0.6" opacity="0.2" />
 
-              {/* DYNAMIC GOLDEN ENERGY DRINK LIQUID FILL */}
+              {/* DYNAMIC AMBER-GOLD ENERGY DRINK LIQUID FILL */}
               {fillPercentage > 0 ? (
                 <g clipPath="url(#canLiquidClip)">
-                  {/* Glowing active golden taurine energy liquid */}
+                  {/* Glowing active radiant amber-gold energy liquid */}
                   <rect
                     x="30"
                     y="24"
                     width="140"
                     height="340"
                     fill="url(#goldenEnergyLiquidGrad)"
-                    opacity="0.88"
+                  />
+
+                  {/* Translucent cylindrical fluid depth and center luminescence */}
+                  <rect
+                    x="30"
+                    y="24"
+                    width="140"
+                    height="340"
+                    fill="url(#energyLiquidDepthGrad)"
                   />
 
                   {/* Animated Wave Meniscus at the liquid surface */}
@@ -274,22 +306,22 @@ export const AnimatedCan: React.FC<AnimatedCanProps> = ({
                     <path
                       d="M 32,5 Q 68,-3 100,5 T 168,5 L 168,22 L 32,22 Z"
                       fill={themeColors.liquidGradStart}
-                      opacity="0.75"
+                      opacity="0.88"
                     />
                     <path
                       d="M 32,5 Q 72,13 100,5 T 168,5 L 168,22 L 32,22 Z"
-                      fill={themeColors.liquidGradEnd}
-                      opacity="0.85"
+                      fill={themeColors.liquidGradMid}
+                      opacity="0.75"
                     />
-                    {/* Golden froth wave crest */}
+                    {/* Very light yellow froth wave crest */}
                     <path
                       d="M 32,5 Q 66,10 100,4 T 168,5 L 168,8 L 32,8 Z"
                       fill="url(#energyWaveFrothGrad)"
-                      opacity="0.95"
+                      opacity="0.98"
                     />
                   </g>
 
-                  {/* Rising Effervescent Golden Champagne Micro-Bubbles */}
+                  {/* Rising Effervescent Micro-Bubbles */}
                   {bubbleList.map((b) => (
                     <g
                       key={b.id}
@@ -298,16 +330,17 @@ export const AnimatedCan: React.FC<AnimatedCanProps> = ({
                     >
                       <circle
                         cx={b.cx}
-                        cy={liquidY + 14 + (b.id * 14) % Math.max(10, 330 - liquidY)}
+                        cy={liquidY + 12 + (b.id * 13) % Math.max(10, 330 - liquidY)}
                         r={b.r}
                         fill="#ffffff"
-                        opacity="0.9"
+                        opacity="0.92"
                       />
                       <circle
                         cx={b.cx - b.r * 0.3}
-                        cy={(liquidY + 14 + (b.id * 14) % Math.max(10, 330 - liquidY)) - b.r * 0.3}
+                        cy={(liquidY + 12 + (b.id * 13) % Math.max(10, 330 - liquidY)) - b.r * 0.3}
                         r={b.r * 0.35}
-                        fill="#ffffff"
+                        fill="#fefce8"
+                        opacity="0.98"
                       />
                     </g>
                   ))}
@@ -506,13 +539,13 @@ export const AnimatedCan: React.FC<AnimatedCanProps> = ({
             </span>
           </div>
 
-          {/* Dynamic Fill Progress Bar (Matching golden energy drink yellow) */}
+          {/* Dynamic Fill Progress Bar (Matching crisp very light yellow profile) */}
           <div className="w-full h-2 sm:h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full my-2.5 overflow-hidden">
             <div
               className="h-full rounded-full transition-all duration-500"
               style={{
                 width: `${fillPercentage}%`,
-                background: `linear-gradient(90deg, ${themeColors.liquidGradStart}, ${themeColors.liquidGradEnd})`,
+                background: `linear-gradient(90deg, ${themeColors.liquidGradEnd}, ${themeColors.liquidGradMid}, ${themeColors.liquidGradStart})`,
               }}
             />
           </div>
@@ -521,7 +554,7 @@ export const AnimatedCan: React.FC<AnimatedCanProps> = ({
           <div className="flex items-center gap-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium">
             {summary.currentCaffeineMg > 0.05 ? (
               <>
-                <span className="font-mono text-amber-600 dark:text-amber-400 font-bold tabular-nums">
+                <span className="font-mono text-amber-500 dark:text-yellow-400 font-bold tabular-nums">
                   -{decayRatePerHour} mg/h
                 </span>
                 <span className="text-slate-300 dark:text-slate-700">·</span>

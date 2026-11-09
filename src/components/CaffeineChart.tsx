@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useRef } from 'react';
-import { Moon, AlertTriangle, Layers, Sparkles, Target, Clock, ArrowRight } from 'lucide-react';
+import { Moon, AlertTriangle, Layers, Sparkles, Target, Clock, ArrowRight, ArrowUpDown } from 'lucide-react';
 import { Drink, UserProfile, MetabolismSummary } from '../types';
 import { generateTimelineData, getBedtimeTimestamp } from '../utils/pharmacokinetics';
 
@@ -20,6 +20,7 @@ export const CaffeineChart: React.FC<CaffeineChartProps> = ({
 }) => {
   const [timeRangeHours, setTimeRangeHours] = useState<12 | 24 | 36>(24);
   const [showIndividualCurves, setShowIndividualCurves] = useState(true);
+  const [autoScaleY, setAutoScaleY] = useState<boolean>(true); // Default ON as requested
   const [hoveredPointIndex, setHoveredPointIndex] = useState<number | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
 
@@ -30,14 +31,34 @@ export const CaffeineChart: React.FC<CaffeineChartProps> = ({
     return generateTimelineData(drinks, profile, currentTimeMs, timeRangeHours);
   }, [drinks, profile, currentTimeMs, timeRangeHours]);
 
-  // Determine chart bounds
+  // Determine chart bounds (dynamic zoom when autoScaleY is true, fixed full limit scale when false)
   const maxMg = useMemo(() => {
-    let peak = Math.max(250, profile.dailyLimitMg, targetMg * 1.25);
+    let dataPeak = 0;
     for (const p of points) {
-      if (p.totalMg > peak) peak = p.totalMg;
+      if (p.totalMg > dataPeak) dataPeak = p.totalMg;
     }
-    return Math.ceil((peak * 1.15) / 50) * 50;
-  }, [points, profile.dailyLimitMg, targetMg]);
+
+    if (autoScaleY) {
+      if (dataPeak <= 0.05) {
+        // When clear/empty, provide a clean comfortable baseline scale
+        return Math.max(50, Math.ceil(((targetMg || 50) * 1.25) / 10) * 10);
+      }
+      // Give headroom above the peak and steady state target
+      const requiredCeiling = Math.max(dataPeak * 1.22, (targetMg || 0) * 1.15, 30);
+      if (requiredCeiling <= 80) {
+        return Math.ceil(requiredCeiling / 10) * 10;
+      } else if (requiredCeiling <= 200) {
+        return Math.ceil(requiredCeiling / 25) * 25;
+      } else {
+        return Math.ceil(requiredCeiling / 50) * 50;
+      }
+    } else {
+      // Fixed / Full Range mode: always include daily limit and danger zone
+      let peak = Math.max(250, profile.dailyLimitMg, targetMg * 1.25);
+      if (dataPeak > peak) peak = dataPeak;
+      return Math.ceil((peak * 1.15) / 50) * 50;
+    }
+  }, [points, profile.dailyLimitMg, targetMg, autoScaleY]);
 
   const chartHeight = 440;
   const chartWidth = 1100;
@@ -190,7 +211,25 @@ export const CaffeineChart: React.FC<CaffeineChartProps> = ({
         </div>
 
         {/* View toggles */}
-        <div className="flex items-center gap-2 self-start sm:self-auto">
+        <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+          {/* Auto Scale Y Toggle (Default ON) */}
+          <button
+            onClick={() => setAutoScaleY(!autoScaleY)}
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl border transition shadow-xs active:scale-95 ${
+              autoScaleY
+                ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-300'
+                : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+            }`}
+            title={
+              autoScaleY
+                ? 'Auto-scaling Y axis to fit active curve (Click to switch to fixed daily limit scale)'
+                : 'Fixed full limit scale (Click to switch to auto-scaling)'
+            }
+          >
+            <ArrowUpDown className="w-3.5 h-3.5" />
+            <span>Auto Y: {autoScaleY ? 'On' : 'Off'}</span>
+          </button>
+
           {drinks.length > 1 && (
             <button
               onClick={() => setShowIndividualCurves(!showIndividualCurves)}
@@ -793,6 +832,11 @@ export const CaffeineChart: React.FC<CaffeineChartProps> = ({
           <div className="flex items-center gap-1.5 text-rose-600 dark:text-rose-400 font-medium">
             <AlertTriangle className="w-3.5 h-3.5" />
             <span>&gt;{profile.dailyLimitMg}mg Daily Limit</span>
+          </div>
+
+          <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 font-mono text-[11px]">
+            <ArrowUpDown className="w-3 h-3 text-emerald-500" />
+            <span>Scale: 0–{Math.round(maxMg)}mg ({autoScaleY ? 'Auto' : 'Fixed'})</span>
           </div>
         </div>
 
