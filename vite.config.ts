@@ -6,9 +6,16 @@ import path from 'path';
 import { defineConfig } from 'vite';
 
 export default defineConfig(() => {
-  // Use /Stimly/ when building on GitHub Pages (GITHUB_ACTIONS), and '/' for AI Studio & local preview
+  // Automatically detect repository name in GitHub Actions (e.g. /Stimly/ or /repo-name/), and use '/' for AI Studio & local preview
   const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
-  const base = process.env.VITE_BASE || (isGitHubActions ? '/Stimly/' : '/');
+  let ghPagesBase = '/Stimly/';
+  if (process.env.GITHUB_REPOSITORY) {
+    const parts = process.env.GITHUB_REPOSITORY.split('/');
+    if (parts.length === 2 && parts[1]) {
+      ghPagesBase = `/${parts[1]}/`;
+    }
+  }
+  const base = process.env.VITE_BASE || (isGitHubActions ? ghPagesBase : '/');
 
   return {
     base,
