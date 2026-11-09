@@ -263,67 +263,46 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex flex-col font-sans transition-colors antialiased">
-      {/* Dynamically Responsive Viewport Container */}
-      <div className="w-full max-w-lg md:max-w-3xl lg:max-w-5xl xl:max-w-6xl mx-auto min-h-screen bg-slate-50 dark:bg-[#070a11] flex flex-col shadow-2xl relative border-x border-slate-200/80 dark:border-slate-800/80 pb-24 transition-all duration-300">
-        {/* Mobile Top App Bar */}
+      {/* Dynamically Responsive Full-Width Viewport Container */}
+      <div className="w-full max-w-[1720px] mx-auto min-h-screen bg-slate-50 dark:bg-[#070a11] flex flex-col shadow-2xl relative pb-24 transition-all duration-300">
+        {/* Top App Bar */}
         <Header theme={profile.theme} onToggleTheme={handleToggleTheme} />
 
         {/* Alerts Banner */}
-        <div className="px-4 sm:px-6 pt-3">
+        <div className="px-4 sm:px-6 lg:px-8 xl:px-12 pt-4">
           <AlertsBanner summary={summary} profile={profile} />
         </div>
 
-        {/* TAB 1: HOME (Responsive 2-column on desktop/tablet, single-column on mobile) */}
+        {/* TAB 1: HOME (Full-width responsive arrangement) */}
         {activeTab === 'home' && (
-          <main className="flex-1 px-4 sm:px-6 py-4 space-y-4 animate-in fade-in duration-200">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
-              {/* Left Column on Desktop / Top on Mobile: Can + Timeline + Pacer */}
-              <div className="lg:col-span-7 space-y-4">
-                {/* Compact Live Can Monitor Card */}
-                <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-3.5 sm:p-4 shadow-sm">
-                  <AnimatedCan
-                    summary={summary}
-                    profile={profile}
-                    isRecentLogged={recentLoggedTrigger}
-                  />
-                </div>
-
-                {/* METABOLISM TIMELINE (Directly below the can - Expanded Star Section) */}
-                <CaffeineChart
-                  drinks={drinks}
-                  profile={profile}
-                  summary={summary}
-                  currentTimeMs={currentTimeMs}
-                  targetSteadyStateMg={profile.steadyStateTargetMg || 100}
-                />
-
-                {/* STEADY-STATE PACER (Microdose sip recommendations, timer & audio alert) */}
-                <SteadyStatePacer
+          <main className="flex-1 px-4 sm:px-6 lg:px-8 xl:px-12 py-5 space-y-6 animate-in fade-in duration-200">
+            {/* ROW 1: Hero Can & Telemetry + Vitals & Quick Log */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-stretch">
+              {/* Left: Live Can & Pharmacokinetic Telemetry Card */}
+              <div className="lg:col-span-6 xl:col-span-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 shadow-sm flex flex-col justify-center">
+                <AnimatedCan
                   summary={summary}
                   profile={profile}
-                  currentTimeMs={currentTimeMs}
-                  targetMg={profile.steadyStateTargetMg || 100}
-                  onUpdateTargetMg={handleUpdateSteadyStateTarget}
-                  onLogMicrodoseSip={handleLogMicrodoseSip}
+                  isRecentLogged={recentLoggedTrigger}
                 />
               </div>
 
-              {/* Right Column on Desktop / Middle on Mobile: Vitals + Quick Log + Living Heart */}
-              <div className="lg:col-span-5 space-y-4">
-                {/* Health Vitals Summary Row */}
-                <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3 gap-2.5">
+              {/* Right: Quick Vitals Metrics + Quick Log Presets */}
+              <div className="lg:col-span-6 xl:col-span-7 flex flex-col justify-between gap-4">
+                {/* Health Vitals Summary Row (3 Large Cards) */}
+                <div className="grid grid-cols-3 gap-3 sm:gap-4 flex-1">
                   {/* Daily Intake */}
-                  <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-3 shadow-sm flex flex-col justify-between">
-                    <div className="flex items-center gap-1 text-[11px] font-bold text-slate-700 dark:text-slate-300">
-                      <Zap className="w-3.5 h-3.5 text-amber-500" />
+                  <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-3.5 sm:p-4 shadow-sm flex flex-col justify-between">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700 dark:text-slate-300">
+                      <Zap className="w-4 h-4 text-amber-500" />
                       <span>Intake</span>
                     </div>
-                    <div className="my-1.5">
-                      <div className="text-xl font-black text-slate-900 dark:text-white font-mono tabular-nums leading-none">
+                    <div className="my-2">
+                      <div className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white font-mono tabular-nums leading-none">
                         {summary.dailyTotalMg}
-                        <span className="text-[10px] font-normal text-slate-400 ml-0.5">mg</span>
+                        <span className="text-xs font-normal text-slate-400 ml-1">mg</span>
                       </div>
-                      <div className="w-full h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 mt-1.5 overflow-hidden">
+                      <div className="w-full h-2 rounded-full bg-slate-100 dark:bg-slate-800 mt-2 overflow-hidden">
                         <div
                           className={`h-full ${
                             summary.percentOfDailyLimit > 100
@@ -336,24 +315,24 @@ export default function App() {
                         />
                       </div>
                     </div>
-                    <span className="text-[10px] text-slate-400 font-mono">
+                    <span className="text-xs text-slate-400 font-mono">
                       {summary.percentOfDailyLimit}% of {profile.dailyLimitMg}mg
                     </span>
                   </div>
 
                   {/* Bedtime Level */}
-                  <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-3 shadow-sm flex flex-col justify-between">
-                    <div className="flex items-center gap-1 text-[11px] font-bold text-slate-700 dark:text-slate-300">
-                      <Moon className="w-3.5 h-3.5 text-indigo-500" />
+                  <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-3.5 sm:p-4 shadow-sm flex flex-col justify-between">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700 dark:text-slate-300">
+                      <Moon className="w-4 h-4 text-indigo-500" />
                       <span>Bedtime</span>
                     </div>
-                    <div className="my-1.5">
-                      <div className="text-xl font-black text-slate-900 dark:text-white font-mono tabular-nums leading-none">
+                    <div className="my-2">
+                      <div className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white font-mono tabular-nums leading-none">
                         {summary.bedtimeRemainingMg}
-                        <span className="text-[10px] font-normal text-slate-400 ml-0.5">mg</span>
+                        <span className="text-xs font-normal text-slate-400 ml-1">mg</span>
                       </div>
                     </div>
-                    <span className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+                    <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">
                       {summary.bedtimeSleepStatus === 'optimal'
                         ? '✓ Sleep Safe'
                         : '⚠️ Disrupted'}
@@ -361,18 +340,18 @@ export default function App() {
                   </div>
 
                   {/* Body Exposure (mg/kg) */}
-                  <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-3 shadow-sm flex flex-col justify-between">
-                    <div className="flex items-center gap-1 text-[11px] font-bold text-slate-700 dark:text-slate-300">
-                      <Scale className="w-3.5 h-3.5 text-emerald-500" />
+                  <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-3.5 sm:p-4 shadow-sm flex flex-col justify-between">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700 dark:text-slate-300">
+                      <Scale className="w-4 h-4 text-emerald-500" />
                       <span>Exposure</span>
                     </div>
-                    <div className="my-1.5">
-                      <div className="text-xl font-black text-slate-900 dark:text-white font-mono tabular-nums leading-none">
+                    <div className="my-2">
+                      <div className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white font-mono tabular-nums leading-none">
                         {summary.mgPerKg.toFixed(1)}
-                        <span className="text-[10px] font-normal text-slate-400 ml-0.5">mg/kg</span>
+                        <span className="text-xs font-normal text-slate-400 ml-1">mg/kg</span>
                       </div>
                     </div>
-                    <span className="text-[10px] text-slate-400 font-mono">
+                    <span className="text-xs text-slate-400 font-mono">
                       {profile.weightKg} kg weight
                     </span>
                   </div>
@@ -384,8 +363,36 @@ export default function App() {
                   onLogPreset={handleQuickLog}
                   onOpenCustomModal={() => setIsQuickLogSheetOpen(true)}
                 />
+              </div>
+            </div>
 
-                {/* BOLDLY PRESENT ON HOME: Heart Rate Monitor & Living ECG */}
+            {/* ROW 2: THE STAR CENTERPIECE - EXPANSIVE FULL-WIDTH METABOLISM TIMELINE */}
+            <div className="w-full">
+              <CaffeineChart
+                drinks={drinks}
+                profile={profile}
+                summary={summary}
+                currentTimeMs={currentTimeMs}
+                targetSteadyStateMg={profile.steadyStateTargetMg || 100}
+              />
+            </div>
+
+            {/* ROW 3: TWO POWER COMMAND PANELS SIDE-BY-SIDE */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6 items-stretch">
+              {/* STEADY-STATE PACER (Microdose sip recommendations, timer & audio alert) */}
+              <div className="w-full">
+                <SteadyStatePacer
+                  summary={summary}
+                  profile={profile}
+                  currentTimeMs={currentTimeMs}
+                  targetMg={profile.steadyStateTargetMg || 100}
+                  onUpdateTargetMg={handleUpdateSteadyStateTarget}
+                  onLogMicrodoseSip={handleLogMicrodoseSip}
+                />
+              </div>
+
+              {/* BOLD LIVING HEART RATE MONITOR & REAL-TIME ECG */}
+              <div className="w-full">
                 <HeartVisualizer
                   summary={summary}
                   profile={profile}
@@ -393,21 +400,21 @@ export default function App() {
                   onUpdateBaselineBpm={handleUpdateBaselineBpm}
                 />
               </div>
+            </div>
 
-              {/* Full Width at Bottom: Drink History Log */}
-              <div id="drink-log-section" className="lg:col-span-12">
-                <DrinkHistory
-                  drinks={drinks}
-                  halfLifeHours={profile.halfLifeHours}
-                  currentTimeMs={currentTimeMs}
-                  onEditDrink={(drink) => {
-                    setEditingDrink(drink);
-                    setIsDrinkModalOpen(true);
-                  }}
-                  onDeleteDrink={handleDeleteDrink}
-                  onClearAll={handleClearAllDrinks}
-                />
-              </div>
+            {/* ROW 4: FULL-WIDTH DRINK HISTORY LOG */}
+            <div id="drink-log-section" className="w-full">
+              <DrinkHistory
+                drinks={drinks}
+                halfLifeHours={profile.halfLifeHours}
+                currentTimeMs={currentTimeMs}
+                onEditDrink={(drink) => {
+                  setEditingDrink(drink);
+                  setIsDrinkModalOpen(true);
+                }}
+                onDeleteDrink={handleDeleteDrink}
+                onClearAll={handleClearAllDrinks}
+              />
             </div>
           </main>
         )}

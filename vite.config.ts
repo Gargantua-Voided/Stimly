@@ -6,7 +6,9 @@ import path from 'path';
 import { defineConfig } from 'vite';
 
 export default defineConfig(() => {
-  const base = '/Stimly/';
+  // Use /Stimly/ when building on GitHub Pages (GITHUB_ACTIONS), and '/' for AI Studio & local preview
+  const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
+  const base = process.env.VITE_BASE || (isGitHubActions ? '/Stimly/' : '/');
 
   return {
     base,

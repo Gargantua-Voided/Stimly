@@ -39,9 +39,9 @@ export const CaffeineChart: React.FC<CaffeineChartProps> = ({
     return Math.ceil((peak * 1.15) / 50) * 50;
   }, [points, profile.dailyLimitMg, targetMg]);
 
-  const chartHeight = 390;
-  const chartWidth = 800;
-  const padding = { top: 32, right: 35, bottom: 44, left: 56 };
+  const chartHeight = 440;
+  const chartWidth = 1100;
+  const padding = { top: 38, right: 45, bottom: 50, left: 68 };
 
   const innerWidth = chartWidth - padding.left - padding.right;
   const innerHeight = chartHeight - padding.top - padding.bottom;
@@ -242,36 +242,36 @@ export const CaffeineChart: React.FC<CaffeineChartProps> = ({
       </div>
 
       {/* Timeline Quick Bio-Metrics Strip */}
-      <div className="grid grid-cols-4 gap-1.5 sm:gap-2 my-3">
-        <div className="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60 text-center">
-          <span className="text-[10px] text-slate-400 block font-medium">Circulating</span>
-          <span className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white font-mono tabular-nums">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3.5 my-4">
+        <div className="p-3 sm:p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60 text-center">
+          <span className="text-[11px] sm:text-xs text-slate-400 block font-semibold mb-0.5">Circulating</span>
+          <span className="text-base sm:text-xl font-black text-slate-900 dark:text-white font-mono tabular-nums">
             {(summary?.currentCaffeineMg ?? 0).toFixed(1)}
-            <span className="text-[9px] font-normal text-slate-400 ml-0.5">mg</span>
+            <span className="text-xs font-normal text-slate-400 ml-1">mg</span>
           </span>
         </div>
 
-        <div className="p-2 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-200/60 dark:border-emerald-800/50 text-center">
-          <span className="text-[10px] text-emerald-700 dark:text-emerald-400 block font-medium">Target Plateau</span>
-          <span className="text-xs sm:text-sm font-extrabold text-emerald-600 dark:text-emerald-400 font-mono tabular-nums">
+        <div className="p-3 sm:p-3.5 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/25 border border-emerald-200/70 dark:border-emerald-800/60 text-center">
+          <span className="text-[11px] sm:text-xs text-emerald-700 dark:text-emerald-400 block font-semibold mb-0.5">Target Plateau</span>
+          <span className="text-base sm:text-xl font-black text-emerald-600 dark:text-emerald-400 font-mono tabular-nums">
             {targetMg}
-            <span className="text-[9px] font-normal text-slate-400 ml-0.5">mg</span>
+            <span className="text-xs font-normal text-slate-400 ml-1">mg</span>
           </span>
         </div>
 
-        <div className="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60 text-center">
-          <span className="text-[10px] text-slate-400 block font-medium">Daily Peak</span>
-          <span className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white font-mono tabular-nums">
+        <div className="p-3 sm:p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60 text-center">
+          <span className="text-[11px] sm:text-xs text-slate-400 block font-semibold mb-0.5">Daily Peak</span>
+          <span className="text-base sm:text-xl font-black text-slate-900 dark:text-white font-mono tabular-nums">
             {(summary?.peakCaffeineTodayMg ?? 0).toFixed(0)}
-            <span className="text-[9px] font-normal text-slate-400 ml-0.5">mg</span>
+            <span className="text-xs font-normal text-slate-400 ml-1">mg</span>
           </span>
         </div>
 
-        <div className="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60 text-center">
-          <span className="text-[10px] text-indigo-600 dark:text-indigo-400 block font-medium">At Bedtime</span>
-          <span className="text-xs sm:text-sm font-extrabold text-indigo-600 dark:text-indigo-400 font-mono tabular-nums">
+        <div className="p-3 sm:p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60 text-center">
+          <span className="text-[11px] sm:text-xs text-indigo-600 dark:text-indigo-400 block font-semibold mb-0.5">At Bedtime</span>
+          <span className="text-base sm:text-xl font-black text-indigo-600 dark:text-indigo-400 font-mono tabular-nums">
             {(summary?.bedtimeRemainingMg ?? 0).toFixed(0)}
-            <span className="text-[9px] font-normal text-slate-400 ml-0.5">mg</span>
+            <span className="text-xs font-normal text-slate-400 ml-1">mg</span>
           </span>
         </div>
       </div>
@@ -287,14 +287,14 @@ export const CaffeineChart: React.FC<CaffeineChartProps> = ({
         >
           <defs>
             <linearGradient id="curveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#10b981" stop-opacity="0.35" />
-              <stop offset="70%" stop-color="#06b6d4" stop-opacity="0.08" />
-              <stop offset="100%" stop-color="#0284c7" stop-opacity="0.0" />
+              <stop offset="0%" stopColor="#10b981" stopOpacity="0.38" />
+              <stop offset="70%" stopColor="#06b6d4" stopOpacity="0.10" />
+              <stop offset="100%" stopColor="#0284c7" stopOpacity="0.0" />
             </linearGradient>
 
             <linearGradient id="dangerGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#ef4444" stop-opacity="0.18" />
-              <stop offset="100%" stop-color="#ef4444" stop-opacity="0.04" />
+              <stop offset="0%" stopColor="#ef4444" stopOpacity="0.2" />
+              <stop offset="100%" stopColor="#ef4444" stopOpacity="0.04" />
             </linearGradient>
           </defs>
 
@@ -314,16 +314,16 @@ export const CaffeineChart: React.FC<CaffeineChartProps> = ({
                 x2={chartWidth - padding.right}
                 y2={dangerY}
                 stroke="#ef4444"
-                strokeWidth="1.5"
-                strokeDasharray="4 4"
-                opacity="0.75"
+                strokeWidth="1.75"
+                strokeDasharray="5 4"
+                opacity="0.85"
               />
               <text
-                x={chartWidth - padding.right - 6}
-                y={dangerY - 6}
+                x={chartWidth - padding.right - 8}
+                y={dangerY - 8}
                 textAnchor="end"
                 fill="#ef4444"
-                fontSize="10"
+                fontSize="12"
                 fontFamily="JetBrains Mono, monospace"
                 fontWeight="700"
               >
@@ -341,15 +341,15 @@ export const CaffeineChart: React.FC<CaffeineChartProps> = ({
                 x2={chartWidth - padding.right}
                 y2={cautionY}
                 stroke="#f59e0b"
-                strokeWidth="1"
-                strokeDasharray="3 3"
-                opacity="0.45"
+                strokeWidth="1.2"
+                strokeDasharray="4 3"
+                opacity="0.55"
               />
               <text
-                x={padding.left + 8}
-                y={cautionY - 5}
+                x={padding.left + 10}
+                y={cautionY - 6}
                 fill="#d97706"
-                fontSize="9"
+                fontSize="11"
                 fontFamily="JetBrains Mono, monospace"
                 fontWeight="600"
               >
@@ -367,15 +367,15 @@ export const CaffeineChart: React.FC<CaffeineChartProps> = ({
                 x2={chartWidth - padding.right}
                 y2={sleepCutoffY}
                 stroke="#6366f1"
-                strokeWidth="1"
-                strokeDasharray="2 2"
-                opacity="0.5"
+                strokeWidth="1.2"
+                strokeDasharray="3 3"
+                opacity="0.6"
               />
               <text
-                x={padding.left + 8}
-                y={sleepCutoffY - 4}
+                x={padding.left + 10}
+                y={sleepCutoffY - 6}
                 fill="#6366f1"
-                fontSize="9"
+                fontSize="11"
                 fontFamily="JetBrains Mono, monospace"
                 fontWeight="600"
               >
@@ -393,27 +393,27 @@ export const CaffeineChart: React.FC<CaffeineChartProps> = ({
                 x2={chartWidth - padding.right}
                 y2={targetY}
                 stroke="#10b981"
-                strokeWidth="1.5"
-                strokeDasharray="4 3"
-                opacity="0.8"
+                strokeWidth="1.8"
+                strokeDasharray="5 3"
+                opacity="0.9"
               />
               <rect
-                x={chartWidth - padding.right - 146}
-                y={targetY - 17}
-                width="142"
-                height="15"
-                rx="3.5"
+                x={chartWidth - padding.right - 170}
+                y={targetY - 20}
+                width="165"
+                height="18"
+                rx="4"
                 fill="#064e3b"
                 stroke="#10b981"
-                strokeWidth="0.8"
+                strokeWidth="1"
                 opacity="0.95"
               />
               <text
-                x={chartWidth - padding.right - 75}
-                y={targetY - 6}
+                x={chartWidth - padding.right - 88}
+                y={targetY - 7}
                 textAnchor="middle"
                 fill="#a7f3d0"
-                fontSize="8.5"
+                fontSize="10"
                 fontFamily="JetBrains Mono, monospace"
                 fontWeight="700"
               >
@@ -435,15 +435,15 @@ export const CaffeineChart: React.FC<CaffeineChartProps> = ({
                   y2={y}
                   stroke="currentColor"
                   className="text-slate-200 dark:text-slate-800"
-                  strokeWidth="0.75"
-                  strokeDasharray="2 4"
+                  strokeWidth="0.8"
+                  strokeDasharray="3 4"
                 />
                 <text
-                  x={padding.left - 8}
-                  y={y + 3.5}
+                  x={padding.left - 10}
+                  y={y + 4}
                   textAnchor="end"
                   className="fill-slate-400 dark:fill-slate-500"
-                  fontSize="10"
+                  fontSize="12"
                   fontFamily="JetBrains Mono, monospace"
                 >
                   {mgVal}
@@ -471,10 +471,10 @@ export const CaffeineChart: React.FC<CaffeineChartProps> = ({
                   />
                   <text
                     x={x}
-                    y={chartHeight - padding.bottom + 16}
+                    y={chartHeight - padding.bottom + 20}
                     textAnchor="middle"
                     className="fill-slate-400 dark:fill-slate-500"
-                    fontSize="10"
+                    fontSize="12"
                     fontFamily="JetBrains Mono, monospace"
                   >
                     {pt.timeLabel}
@@ -492,17 +492,17 @@ export const CaffeineChart: React.FC<CaffeineChartProps> = ({
                 x2={bedtimeX}
                 y2={chartHeight - padding.bottom}
                 stroke="#6366f1"
-                strokeWidth="1.5"
+                strokeWidth="1.8"
                 strokeDasharray="4 4"
-                opacity="0.8"
+                opacity="0.85"
               />
-              <circle cx={bedtimeX} cy={padding.top + 8} r="5" fill="#4f46e5" stroke="#c7d2fe" strokeWidth="1.5" />
+              <circle cx={bedtimeX} cy={padding.top + 10} r="6" fill="#4f46e5" stroke="#c7d2fe" strokeWidth="1.8" />
               <text
                 x={bedtimeX}
-                y={padding.top - 8}
+                y={padding.top - 10}
                 textAnchor="middle"
                 fill="#4f46e5"
-                fontSize="10"
+                fontSize="12"
                 fontFamily="Outfit, sans-serif"
                 fontWeight="700"
               >
