@@ -11,8 +11,10 @@ import {
   Sun,
   ShieldAlert,
   Sparkles,
+  Sliders,
 } from 'lucide-react';
 import { UserProfile } from '../types';
+import { HeartRateCalibrationModal } from './HeartRateCalibrationModal';
 
 interface SettingsViewProps {
   profile: UserProfile;
@@ -36,6 +38,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   const [showFactoryConfirm, setShowFactoryConfirm] = useState(false);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
   const [savedBadge, setSavedBadge] = useState(false);
+  const [isCalibrationWizardOpen, setIsCalibrationWizardOpen] = useState(false);
 
   const handleWeightChange = (val: number) => {
     if (weightUnit === 'lbs') {
@@ -163,9 +166,19 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
 
             {/* Baseline Resting Heart Rate */}
             <div>
-              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Resting Heart Rate (BPM)
-              </label>
+              <div className="flex items-center justify-between mb-1">
+                <label className="block font-semibold text-slate-700 dark:text-slate-300">
+                  Resting Heart Rate (BPM)
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setIsCalibrationWizardOpen(true)}
+                  className="text-xs font-bold text-rose-600 dark:text-rose-400 hover:underline flex items-center gap-1"
+                >
+                  <Sliders className="w-3 h-3" />
+                  <span>Launch Wizard</span>
+                </button>
+              </div>
               <input
                 type="number"
                 min={45}
@@ -437,6 +450,17 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           </div>
         </div>
       )}
+
+      {/* Baseline Calibration Wizard Modal */}
+      <HeartRateCalibrationModal
+        isOpen={isCalibrationWizardOpen}
+        onClose={() => setIsCalibrationWizardOpen(false)}
+        currentBaselineBpm={formData.baselineHeartRateBpm || 68}
+        onSaveBaseline={(newBpm) => {
+          setFormData((prev) => ({ ...prev, baselineHeartRateBpm: newBpm }));
+          setIsCalibrationWizardOpen(false);
+        }}
+      />
     </div>
   );
 };

@@ -214,7 +214,7 @@ export default function App() {
       const newDrink: Drink = {
         id: `drink_${Date.now()}_sip`,
         name: `Microdose Sip (~${volumeMl}ml)`,
-        brand: 'Steady-State Sip',
+        brand: 'Micro Dose Sip',
         volumeMl: volumeMl,
         caffeineMg: caffeineMg,
         timestamp: new Date().toISOString(),
@@ -377,10 +377,10 @@ export default function App() {
               />
             </div>
 
-            {/* ROW 3: TWO POWER COMMAND PANELS SIDE-BY-SIDE */}
+            {/* ROW 3: TWO POWER COMMAND PANELS SIDE-BY-SIDE (Equal height flex matching) */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6 items-stretch">
-              {/* STEADY-STATE PACER (Microdose sip recommendations, timer & audio alert) */}
-              <div className="w-full">
+              {/* MICRO DOSE (Microdose sip recommendations, timer & audio alert) */}
+              <div className="w-full flex flex-col h-full">
                 <SteadyStatePacer
                   summary={summary}
                   profile={profile}
@@ -392,7 +392,7 @@ export default function App() {
               </div>
 
               {/* BOLD LIVING HEART RATE MONITOR & REAL-TIME ECG */}
-              <div className="w-full">
+              <div className="w-full flex flex-col h-full">
                 <HeartVisualizer
                   summary={summary}
                   profile={profile}

@@ -119,8 +119,8 @@ export const SteadyStatePacer: React.FC<SteadyStatePacerProps> = ({
             // Native notification if permitted
             if ('Notification' in window && Notification.permission === 'granted') {
               try {
-                new Notification('Stimly Microdose Sip', {
-                  body: `Time for a ~${sipVolumeMl}ml sip (${sipCaffeineMg}mg) to sustain your ${targetMg}mg steady state!`,
+                new Notification('Stimly Micro Dose', {
+                  body: `Time for a ~${sipVolumeMl}ml sip (${sipCaffeineMg}mg) to sustain your ${targetMg}mg focus!`,
                   icon: `${import.meta.env.BASE_URL}logo.png`,
                 });
               } catch {
@@ -152,16 +152,16 @@ export const SteadyStatePacer: React.FC<SteadyStatePacerProps> = ({
   };
 
   return (
-    <div className="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-4 sm:p-5 shadow-sm space-y-4">
+    <div className="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-4 sm:p-5 shadow-sm hover:shadow-md transition h-full flex flex-col justify-between space-y-4">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+      <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+        <div className="flex items-center gap-2.5">
+          <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 shadow-xs">
             <Target className="w-4 h-4" />
           </div>
           <div>
             <h3 className="text-sm font-bold text-slate-900 dark:text-white font-display flex items-center gap-1.5">
-              <span>Steady-State Pacer</span>
+              <span>Micro Dose</span>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             </h3>
             <span className="text-[11px] text-slate-400 font-mono">
